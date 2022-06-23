@@ -7,16 +7,16 @@ from rest_framework import status
 from rest_framework import permissions
 from .models import Todo
 from .serializers import TodoSerializer
-from celery.decorators import task
-from celery.utils.log import get_task_logger
+# from celery.decorators import task
+# from celery.utils.log import get_task_logger
 import pdb
 
 logger = get_task_logger(__name__)
 
-@task(name="sum_two_numbers")
-def add(x, y):
-    logger.info('Adding 2 number...!!!')
-    return x+y
+# @task(name="sum_two_numbers")
+# def add(x, y):
+#     logger.info('Adding 2 number...!!!')
+#     return x+y
 
 class TodoListApiView(APIView):
     # add permission to check if user is authenticated
@@ -29,7 +29,7 @@ class TodoListApiView(APIView):
         '''
         todos = Todo.objects.filter(user = request.user.id)
         serializer = TodoSerializer(todos, many=True)
-        add.delay(1,2)
+        # add.delay(1,2)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     # 2. Create
